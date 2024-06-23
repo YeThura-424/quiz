@@ -7,6 +7,7 @@ var questions = [
   {
     question: "What is the adult of a kid called",
     choices: ["calf", "doe", "goat", "chick"],
+    correctAnswer: 2,
   },
 ];
 
@@ -22,6 +23,7 @@ $(document).ready(function () {
     .on("click", function () {
       if (!quizOver) {
         value = $("input[type='radio']:checked").val();
+        console.log("value", value);
         if (value == undefined) {
           $(document).find(".quizMessage").text("Please select an answer");
           $(document).find(".quizMessage").show();
@@ -65,11 +67,15 @@ function displayCurrentQuestion() {
   for (i = 0; i < numChoices; i++) {
     choice = questions[currentQuestion].choices[i];
     $(
-      '<li><input type="radio" value=' +
+      '<li class="bg-white my-2 capitalize"><input class="hidden" type="radio" value=' +
         i +
-        'name="dynradio"/>' +
+        ' name="dynradio" id="radio_' +
+        i +
+        '" /><label class="p-2 flex rounded w-full border border-gray-400 cursor-pointer" for="radio_' +
+        i +
+        '">' +
         choice +
-        "</li>"
+        "</label></li>"
     ).appendTo(choiceList);
   }
 }
