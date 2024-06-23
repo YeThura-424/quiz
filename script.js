@@ -39,6 +39,54 @@ $(document).ready(function () {
             quizOver = true;
           }
         }
+      } else {
+        quizOver = false;
+        $(document).find(".nextButton").text("Next Question");
+        resetQuiz();
+        displayCurrentQuestion();
+        hideScore();
       }
     });
 });
+
+function displayCurrentQuestion() {
+  console.log("Current Question");
+
+  var question = questions[currentQuestion].question;
+  var questionClass = $(document).find(".quiz-container > .question");
+  var choiceList = $(document).find(".quiz-container > .choiceList");
+  var numChoices = questions[currentQuestion].choices.length;
+
+  $(questionClass).text(question);
+
+  $(choiceList).find("li").remove();
+
+  var choice;
+  for (i = 0; i < numChoices; i++) {
+    choice = questions[currentQuestion].choices[i];
+    $(
+      '<li><input type="radio" value=' +
+        i +
+        'name="dynradio"/>' +
+        choice +
+        "</li>"
+    ).appendTo(choiceList);
+  }
+}
+
+function resetQuiz() {
+  currentQuestion = 0;
+  correctAnswer = 0;
+  hideScore();
+}
+
+function displayScroe() {
+  $(document)
+    .find(".quiz-container > .result")
+    .text("You scored:" + correctAnswer + " out of: " + questions.length);
+  $(document).find(".quiz-container > .result").show();
+}
+
+function hideScore() {
+  $(document).find(".result").hide();
+}
